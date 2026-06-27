@@ -3,56 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flora Farms: Signal Propagation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @keyframes pulse-ble {
+            0% { transform: scale(0.1); opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+        @keyframes pulse-lora {
+            0% { transform: scale(0.1); opacity: 1; border-width: 4px; }
+            100% { transform: scale(8); opacity: 0; border-width: 1px; }
+        }
 
-    <title>LoRa vs BLE Signal Propagation</title>
+        .wave-ble {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            margin-top: -50px;
+            margin-left: -50px;
+            border-radius: 50%;
+            border: 3px solid #3b82f6;
+            animation: pulse-ble 1.5s infinite linear;
+            pointer-events: none;
+        }
 
-    <link rel="stylesheet" href="style.css">
+        .wave-lora {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            margin-top: -50px;
+            margin-left: -50px;
+            border-radius: 50%;
+            border: 3px solid #10b981;
+            animation: pulse-lora 3s infinite ease-out;
+            pointer-events: none;
+        }
+
+        .delay-1 { animation-delay: 0.5s; }
+        .delay-2 { animation-delay: 1s; }
+
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
 </head>
+<body class="bg-gray-900 text-white font-sans min-h-screen flex items-center justify-center p-8 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]">
 
-<body>
+    <div class="w-full max-w-2xl">
 
-    <h1>BLE vs LoRa Signal Propagation</h1>
+        <!-- Header -->
+        <header class="text-center mb-6 space-y-1">
+            <h1 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">
+                Flora Farms: Smart Greenhouse
+            </h1>
+            <p class="text-gray-400 text-sm">Interactive Technical Simulation — Team: The Incredibles</p>
+        </header>
 
-    <div class="simulation-box">
+        <!-- Signal Propagation Panel -->
+        <div class="glass-panel rounded-2xl p-6 relative overflow-hidden flex flex-col">
+            <h2 class="text-2xl font-semibold mb-1 flex items-center gap-2">
+                <i class="fa-solid fa-tower-broadcast text-blue-400"></i> Signal Propagation
+            </h2>
+            <p class="text-sm text-gray-400 mb-6">Visualizing 2.4 GHz (BLE) vs. Sub-GHz (LoRa) range &amp; penetration.</p>
 
-        <!-- Sensor Node -->
-        <div class="sensor-node">
-            <div style="font-size:50px;">🌱</div>
-            <p>ESP32 Node</p>
-        </div>
+            <!-- Visualisation Canvas -->
+            <div class="bg-gray-800 rounded-xl relative overflow-hidden border border-gray-700 min-h-[300px]">
 
-        <!-- Greenhouse Wall -->
-        <div class="greenhouse-wall">
-            <span>GREENHOUSE WALL</span>
-        </div>
+                <!-- Source Node (ESP32) -->
+                <div class="absolute top-1/2 left-1/4 transform -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center">
+                    <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center border-2 border-gray-500 shadow-lg">
+                        <i class="fa-solid fa-leaf text-green-400"></i>
+                    </div>
+                    <span class="text-xs mt-2 font-mono bg-gray-900 px-2 rounded">Node 1 (ESP32)</span>
+                </div>
 
-        <!-- Field Office -->
-        <div class="office-node">
-            <div style="font-size:50px;">🏢</div>
-            <p>Field Office</p>
-        </div>
+                <!-- Target Node (Field Office) -->
+                <div class="absolute top-1/2 right-4 transform -translate-y-1/2 z-10 flex flex-col items-center">
+                    <div class="w-14 h-14 bg-gray-700 rounded-lg flex items-center justify-center border-2 border-gray-500 shadow-lg">
+                        <i class="fa-solid fa-building text-blue-300"></i>
+                    </div>
+                    <span class="text-xs mt-2 font-mono bg-gray-900 px-2 rounded">Field Office</span>
+                </div>
 
-        <!-- Radio Waves -->
-        <div id="wave-container">
-            <div class="wave-lora"></div>
-            <div class="wave-lora delay-2"></div>
+                <!-- Greenhouse Wall Obstacle -->
+                <div class="absolute top-0 left-1/2 w-4 h-full bg-gray-600/50 backdrop-blur-sm border-l border-r border-gray-500 flex items-center justify-center z-20">
+                    <span class="transform -rotate-90 text-xs font-bold text-gray-300 tracking-widest whitespace-nowrap">GREENHOUSE WALL</span>
+                </div>
+
+                <!-- Wave Animation Container -->
+                <div id="wave-container" class="absolute top-1/2 left-1/4 transform -translate-x-1/2 -translate-y-1/2">
+                    <!-- Default: LoRa -->
+                    <div class="wave-lora"></div>
+                    <div class="wave-lora delay-2"></div>
+                </div>
+            </div>
+
+            <!-- Protocol Toggle Buttons -->
+            <div class="mt-6 flex justify-center gap-4 z-30">
+                <button onclick="setProtocol('ble')" id="btn-ble"
+                    class="px-4 py-2 rounded-lg font-semibold transition-all border-2 border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white">
+                    Simulate BLE
+                </button>
+                <button onclick="setProtocol('lora')" id="btn-lora"
+                    class="px-4 py-2 rounded-lg font-semibold transition-all bg-green-500 text-white border-2 border-green-500 hover:bg-green-600">
+                    Simulate LoRa
+                </button>
+            </div>
         </div>
 
     </div>
 
-    <div class="buttons">
+    <script>
+        function setProtocol(protocol) {
+            const container = document.getElementById('wave-container');
+            const btnBle = document.getElementById('btn-ble');
+            const btnLora = document.getElementById('btn-lora');
 
-        <button onclick="setProtocol('ble')">
-            Simulate BLE
-        </button>
+            // Reset both buttons to inactive style
+            btnBle.className  = "px-4 py-2 rounded-lg font-semibold transition-all border-2 border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white";
+            btnLora.className = "px-4 py-2 rounded-lg font-semibold transition-all border-2 border-green-500 text-green-400 hover:bg-green-500 hover:text-white";
 
-        <button onclick="setProtocol('lora')">
-            Simulate LoRa
-        </button>
-
-    </div>
-
-    <script src="script.js"></script>
-
+            if (protocol === 'ble') {
+                btnBle.className = "px-4 py-2 rounded-lg font-semibold transition-all bg-blue-500 text-white border-2 border-blue-500 hover:bg-blue-600";
+                container.innerHTML = `
+                    <div class="wave-ble z-0"></div>
+                    <div class="wave-ble delay-1 z-0"></div>
+                `;
+            } else {
+                btnLora.className = "px-4 py-2 rounded-lg font-semibold transition-all bg-green-500 text-white border-2 border-green-500 hover:bg-green-600";
+                container.innerHTML = `
+                    <div class="wave-lora z-30"></div>
+                    <div class="wave-lora delay-2 z-30"></div>
+                `;
+            }
+        }
+    </script>
 </body>
 </html>
