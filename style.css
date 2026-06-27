@@ -1,173 +1,299 @@
-/* General page styling */
+/* ==========================
+   GENERAL PAGE STYLING
+========================== */
+
 body{
     margin:0;
+    padding:30px;
     font-family:Arial, sans-serif;
     background:#0f172a;
     color:white;
-    padding:30px;
 }
 
 h1{
     text-align:center;
     margin-bottom:30px;
+    font-size:3rem;
 }
 
-/* Main simulation area */
+
+/* ==========================
+   MAIN SIMULATION AREA
+========================== */
+
 .simulation-box{
     position:relative;
     width:100%;
-    max-width:1200px;
+    max-width:1400px;
     height:500px;
     margin:0 auto;
+
     border:2px solid #475569;
     border-radius:20px;
+
     overflow:hidden;
+
     background:#1e293b;
+    box-shadow:0 0 30px rgba(0,0,0,0.4);
 }
 
-/* ESP32 sensor node */
+
+/* ==========================
+   SENSOR NODE
+========================== */
+
 .sensor-node{
     position:absolute;
+
     left:20%;
     top:50%;
+
     transform:translate(-50%,-50%);
+
     z-index:10;
+
     text-align:center;
     color:white;
-    font-size:1.8rem;
+    font-size:3rem;
 }
 
 .sensor-node p{
     margin-top:10px;
-    font-size:1.2rem;
+    font-size:1.4rem;
+    font-weight:bold;
 }
 
-/* Field office */
+
+/* ==========================
+   FIELD OFFICE
+========================== */
+
 .office-node{
     position:absolute;
-    right:10%;
+
+    right:8%;
     top:50%;
+
     transform:translateY(-50%);
+
     z-index:10;
+
     text-align:center;
     color:white;
-    font-size:1.8rem;
+    font-size:3rem;
 }
 
 .office-node p{
     margin-top:10px;
-    font-size:1.2rem;
+    font-size:1.4rem;
+    font-weight:bold;
 }
 
-/* Greenhouse wall */
+
+/* ==========================
+   GREENHOUSE WALL
+========================== */
+
 .greenhouse-wall{
     position:absolute;
+
     left:50%;
     top:0;
+
     width:30px;
     height:100%;
-    background:rgba(255,255,255,0.35);
+
+    transform:translateX(-50%);
+
+    background:rgba(255,255,255,0.25);
+
+    border-left:2px solid rgba(255,255,255,0.4);
+    border-right:2px solid rgba(255,255,255,0.4);
+
     display:flex;
     justify-content:center;
     align-items:center;
+
     z-index:20;
 }
 
 .greenhouse-wall span{
     writing-mode:vertical-rl;
     text-orientation:mixed;
+
     font-weight:bold;
-    letter-spacing:3px;
+    letter-spacing:4px;
+
+    color:white;
 }
 
-/* Container for signal waves */
+
+/* ==========================
+   SIGNAL ORIGIN
+========================== */
+
 #wave-container{
     position:absolute;
+
     left:20%;
     top:50%;
+
     width:0;
     height:0;
+
     z-index:1;
 }
 
-/* BLE signal */
+
+/* ==========================
+   BLE SIGNAL
+========================== */
+
 .wave-ble{
     position:absolute;
+
     width:100px;
     height:100px;
+
     border-radius:50%;
+
     border:4px solid #3b82f6;
+
+    box-shadow:
+        0 0 20px #3b82f6,
+        inset 0 0 20px #3b82f6;
+
     transform:translate(-50%, -50%);
+
     animation:pulseBLE 1.5s infinite linear;
 }
 
-/* LoRa signal */
+
+/* ==========================
+   LORA SIGNAL
+========================== */
+
 .wave-lora{
     position:absolute;
+
     width:100px;
     height:100px;
+
     border-radius:50%;
+
     border:4px solid #10b981;
+
+    box-shadow:
+        0 0 20px #10b981,
+        inset 0 0 20px #10b981;
+
     transform:translate(-50%, -50%);
-    animation:pulseLoRa 3s infinite ease-out;
+
+    animation:pulseLoRa 4s infinite ease-out;
 }
+
+
+/* Animation delay */
 
 .delay-2{
     animation-delay:1.5s;
 }
 
-/* BLE range animation */
+
+/* ==========================
+   BLE ANIMATION
+   Stops close to wall
+========================== */
+
 @keyframes pulseBLE{
+
     0%{
-        transform:translate(-50%, -50%) scale(0.2);
+        transform:
+            translate(-50%, -50%)
+            scale(0.2);
+
         opacity:1;
     }
 
     100%{
-        transform:translate(-50%, -50%) scale(2.5);
+        transform:
+            translate(-50%, -50%)
+            scale(3.0);
+
         opacity:0;
     }
 }
 
-/* LoRa range animation */
+
+/* ==========================
+   LORA ANIMATION
+   Travels almost entire area
+========================== */
+
 @keyframes pulseLoRa{
+
     0%{
-        transform:translate(-50%, -50%) scale(0.2);
+        transform:
+            translate(-50%, -50%)
+            scale(0.2);
+
         opacity:1;
     }
 
     100%{
-        transform:translate(-50%, -50%) scale(6);
+        transform:
+            translate(-50%, -50%)
+            scale(12);
+
         opacity:0;
     }
 }
 
-/* Buttons */
+
+/* ==========================
+   BUTTONS
+========================== */
+
 .buttons{
     text-align:center;
-    margin-top:20px;
+    margin-top:25px;
 }
 
 .buttons button{
-    padding:12px 25px;
+
+    padding:14px 28px;
+
     margin:0 10px;
+
     border:none;
-    border-radius:10px;
+    border-radius:12px;
+
     cursor:pointer;
+
     font-size:1rem;
     font-weight:bold;
+
+    transition:0.3s;
 }
 
+
 .buttons button:first-child{
+
     background:#2563eb;
     color:white;
 }
 
 .buttons button:last-child{
+
     background:#10b981;
     color:white;
 }
 
 .buttons button:hover{
-    opacity:0.9;
+
+    transform:translateY(-3px);
+
+    opacity:0.95;
+
+    box-shadow:0 8px 20px rgba(0,0,0,0.35);
 }
