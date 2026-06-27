@@ -1,27 +1,58 @@
-<div class="simulation-box">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <div class="sensor-node">
-        🌱
-        <p>ESP32 Node</p>
+    <title>LoRa vs BLE Signal Propagation</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <h1>BLE vs LoRa Signal Propagation</h1>
+
+    <div class="simulation-box">
+
+        <!-- Sensor Node -->
+        <div class="sensor-node">
+            <div style="font-size:50px;">🌱</div>
+            <p>ESP32 Node</p>
+        </div>
+
+        <!-- Greenhouse Wall -->
+        <div class="greenhouse-wall">
+            GREENHOUSE WALL
+        </div>
+
+        <!-- Field Office -->
+        <div class="office-node">
+            <div style="font-size:50px;">🏢</div>
+            <p>Field Office</p>
+        </div>
+
+        <!-- Radio Waves -->
+        <div id="wave-container">
+            <div class="wave-lora"></div>
+            <div class="wave-lora delay-2"></div>
+        </div>
+
     </div>
 
-    <div class="greenhouse-wall">
-        Greenhouse Wall
+    <div class="buttons">
+
+        <button onclick="setProtocol('ble')">
+            Simulate BLE
+        </button>
+
+        <button onclick="setProtocol('lora')">
+            Simulate LoRa
+        </button>
+
     </div>
 
-    <div class="office-node">
-        🏢
-        <p>Field Office</p>
-    </div>
+    <script src="script.js"></script>
 
-    <div id="wave-container">
-        <div class="wave-lora"></div>
-        <div class="wave-lora delay-2"></div>
-    </div>
-
-</div>
-
-<div class="buttons">
-    <button onclick="setProtocol('ble')">Simulate BLE</button>
-    <button onclick="setProtocol('lora')">Simulate LoRa</button>
-</div>
+</body>
+</html>
